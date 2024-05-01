@@ -25,9 +25,9 @@ connectDB();
 
 // routes
 
-// app.get('/', async (req, res) => {
-//     res.send('Backend Working properly!')
-// })
+app.get('/', async (req, res) => {
+    res.send('Backend Working properly!')
+})
 
 app.use('/user', userRoute);
 app.use('/task', taskRoute);
