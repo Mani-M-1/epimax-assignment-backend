@@ -27,12 +27,15 @@ router.put('/update-task/:taskId', async (req, res) => {
             res.status(404).json({message: "Task not found!"});
         }
 
-        await Task.updateOne({_id: req.params.taskId, $set: {taskStatus: req.body.taskStatus}}, {new: true});
+        await Task.updateOne({_id: req.params.taskId}, {
+            $set: {taskStatus: req.body.taskStatus}
+        }, {new: true});
 
 
-        const updatedTask = await Task.findOne({_id: req.params.taskId});
+        // const updatedTask = await Task.findOne({_id: req.params.taskId});
+        const updatedTasksArr = await Task.find({assigneeDetails: req.body.userId});
 
-        res.status(200).json({message: "Task status updated successfully!", taskDetails: updatedTask});
+        res.status(200).json({message: "Task status updated successfully!", updatedTasksArr});
     }catch(err) {
         res.status(500).json({message: err.message});
     }
